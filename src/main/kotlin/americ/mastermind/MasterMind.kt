@@ -11,20 +11,42 @@ object MasterMind {
 
 //        runSingleGame(size)
 
-        // averages 1200-1400 guesses/game in 1 second
+        // averages 1200-1400 guesses/game, max=7000-12000 in 1 second
 //        runEverySolution(size, { size -> CodeBreakerRandomGuess(size) })
 
-        // averages 620-660 guesses/game in 1 seconds
+        // averages 620-660 guesses/game, max=1294-1296 in 1 seconds
 //        runEverySolution(size, { size -> CodeBreakerGuessTracking(size) })
 
-        // averages 620-660 guesses/game in 1 seconds
+        // averages 620-660 guesses/game, max=1295-1296 in 1 seconds
 //        runEverySolution(size, { size -> CodeBreakerDualTracking(size) })
 
-        // averages 620-660 guesses/game in 1 seconds
+        // averages 620-660 guesses/game, max=1296 in 1 seconds
 //        runEverySolution(size, { size -> CodeBreakerAssessmentTracking(size) })
 
-        // averages exactly 233 guesses/game in 1 seconds
-        runEverySolution(size, { size -> CodeBreakerBlankRule(size) })
+        // averages exactly 233 guesses/game, max=909 in 1 seconds
+//        runEverySolution(size, { size -> CodeBreakerBlankRule(size) })
+
+        // averages exactly 5 guesses/game, max=9 in 1 seconds
+        runEverySolution(size, { size -> CodeBreakerFullAssessment(size) })
+
+        /*
+        Future breakers:
+        2) 4 marker rule - when assessment produces 4 total markers, then treat them as if they
+                were all white. Remove solutions from the solution space that are not permutations
+                of the guess pegs.
+        3) similarity
+            3a) based on assessment, calculate a 0-10 similarity rating to indicate how
+                similar the solution must be to that guess. Calculate a similarity rating for
+                the guess and all solutions in the solution space. Use this rating to order the
+                solutions from best to worst. Use the best on the next guess.
+            3b) like 3b, but on successive assessments calculate the similarity rating for all
+                solutions against all existing guess-assessments, and take the average, then
+                rank them by that.
+         4) marker-peg assignments - use the assessment to make all possible assignments of
+                markers to pegs. For each assignment generate all possible solutions. Remove
+                from the solution space any solution that's not in the generated possible
+                solutions.
+         */
     }
 
     private fun runEverySolution(size: Int, codeBreakerFactory: (Int) -> CodeBreaker) {
