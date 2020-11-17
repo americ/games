@@ -18,7 +18,10 @@ object MasterMind {
 //        runEverySolution(size, { size -> CodeBreakerGuessTracking(size) })
 
         // averages 620-660 guesses/game in 1 seconds
-        runEverySolution(size, { size -> CodeBreakerDualTracking(size) })
+//        runEverySolution(size, { size -> CodeBreakerDualTracking(size) })
+
+        // averages 620-660 guesses/game in 1 seconds
+        runEverySolution(size, { size -> CodeBreakerAssessmentTracking(size) })
     }
 
     private fun runEverySolution(size: Int, codeBreakerFactory: (Int) -> CodeBreaker) {
@@ -37,6 +40,7 @@ object MasterMind {
             do {
                 val guess = codeBreaker.getGuess()
                 val assessment = codeMaker.assess(solution, guess)
+                codeBreaker.reportAssessment(assessment)
                 guessCount++
             } while (assessment.blackCount != size)
 
