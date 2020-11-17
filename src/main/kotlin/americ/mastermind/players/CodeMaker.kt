@@ -1,7 +1,6 @@
 package americ.mastermind.players
 
 import americ.mastermind.domain.MMAssessment
-import americ.mastermind.domain.MMPeg
 import americ.mastermind.domain.MMSet
 
 class CodeMaker(val size: Int) {
@@ -44,29 +43,6 @@ class CodeMaker(val size: Int) {
     private fun verifySize(set: MMSet) {
         if (set.pegs.size != size) {
             throw Exception("MMSet size (${set.pegs.size}) does not match code maker size ($size)")
-        }
-    }
-
-    fun createAllSolutions(): List<MMSet> {
-        return buildSolutions(0)
-    }
-
-    private fun buildSolutions(index: Int): List<MMSet> {
-//        val indent = " ".repeat(index)
-        if (index == size) {
-//            println("$indent - termination")
-            return listOf(MMSet(mutableListOf()))
-        } else {
-//            println("$indent - recursing")
-            val recursionResult = MMPeg.values().map { peg ->
-                val childrenSetList = buildSolutions(index + 1)
-                childrenSetList.forEach { set ->
-                    set.pegs.add(peg)
-                }
-                childrenSetList
-            }.flatten<MMSet>()
-//            println("$indent - recursion result length: ${recursionResult.size}")
-            return recursionResult
         }
     }
 }

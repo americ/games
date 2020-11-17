@@ -7,6 +7,25 @@ data class MMSet(val pegs: MutableList<MMPeg>) {
                 (1..size).map { MMPeg.random() }.toMutableList()
             )
         }
+
+        fun createAllSets(size: Int): List<MMSet> {
+            return buildSets(size, 0)
+        }
+
+        private fun buildSets(size: Int, index: Int): List<MMSet> {
+            if (index == size) {
+                return listOf(MMSet(mutableListOf()))
+            } else {
+                val recursionResult = MMPeg.values().map { peg ->
+                    val childrenSetList = buildSets(size, index + 1)
+                    childrenSetList.forEach { set ->
+                        set.pegs.add(peg)
+                    }
+                    childrenSetList
+                }.flatten<MMSet>()
+                return recursionResult
+            }
+        }
     }
 
     fun getByIndices(unmatchedIndices: List<Int>): List<MMPeg> {

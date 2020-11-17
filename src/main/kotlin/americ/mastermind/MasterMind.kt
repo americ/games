@@ -1,9 +1,8 @@
 package americ.mastermind
 
-import americ.mastermind.players.CodeBreaker
-import americ.mastermind.players.CodeBreakerRandomGuess
-import americ.mastermind.players.CodeBreakerGuessTracking
-import americ.mastermind.players.CodeMaker
+import americ.mastermind.domain.MMSet
+import americ.mastermind.players.*
+import org.apache.commons.lang3.time.StopWatch
 
 object MasterMind {
     @JvmStatic
@@ -12,16 +11,21 @@ object MasterMind {
 
 //        runSingleGame(size)
 
-        // averages 1200-1400 guesses/game
+        // averages 1200-1400 guesses/game in 1 second
 //        runEverySolution(size, { size -> CodeBreakerRandomGuess(size) })
 
-        // averages 620-660 guesses/game
-        runEverySolution(size, { size -> CodeBreakerGuessTracking(size) })
+        // averages 620-660 guesses/game in 1 seconds
+//        runEverySolution(size, { size -> CodeBreakerGuessTracking(size) })
+
+        // averages 620-660 guesses/game in 1 seconds
+        runEverySolution(size, { size -> CodeBreakerDualTracking(size) })
     }
 
     private fun runEverySolution(size: Int, codeBreakerFactory: (Int) -> CodeBreaker) {
+        val watch = StopWatch()
+        watch.start()
         val codeMaker = CodeMaker(size)
-        val solutions = codeMaker.createAllSolutions()
+        val solutions = MMSet.createAllSets(size)
 
         val guessCounts = mutableListOf<Int>()
         var solutionCount = 0
@@ -41,12 +45,16 @@ object MasterMind {
             solutionCount++
         }
 
+        watch.stop()
+
         val average = guessCounts.sum() / solutionCount
         val min = guessCounts.min()
         val max = guessCounts.max()
         println("Average guesses: ${average}")
         println("Min guesses: ${min}")
         println("Max guesses: ${max}")
+
+        println("Elapsed seconds: ${watch.time / 1000}")
     }
 
     private fun runSingleGame(size: Int) {
