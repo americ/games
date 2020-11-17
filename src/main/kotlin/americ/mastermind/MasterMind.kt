@@ -21,14 +21,18 @@ object MasterMind {
 //        runEverySolution(size, { size -> CodeBreakerDualTracking(size) })
 
         // averages 620-660 guesses/game in 1 seconds
-        runEverySolution(size, { size -> CodeBreakerAssessmentTracking(size) })
+//        runEverySolution(size, { size -> CodeBreakerAssessmentTracking(size) })
+
+        // averages exactly 233 guesses/game in 1 seconds
+        runEverySolution(size, { size -> CodeBreakerBlankRule(size) })
     }
 
     private fun runEverySolution(size: Int, codeBreakerFactory: (Int) -> CodeBreaker) {
         val watch = StopWatch()
         watch.start()
         val codeMaker = CodeMaker(size)
-        val solutions = MMSet.createAllSets(size)
+        var solutions = MMSet.createAllSets(size)
+        solutions = solutions.shuffled()
 
         val guessCounts = mutableListOf<Int>()
         var solutionCount = 0
