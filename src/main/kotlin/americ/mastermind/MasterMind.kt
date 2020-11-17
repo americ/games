@@ -1,6 +1,8 @@
 package americ.mastermind
 
 import americ.mastermind.players.CodeBreaker
+import americ.mastermind.players.CodeBreakerRandomGuess
+import americ.mastermind.players.CodeBreakerGuessTracking
 import americ.mastermind.players.CodeMaker
 
 object MasterMind {
@@ -9,10 +11,15 @@ object MasterMind {
         val size = 4
 
 //        runSingleGame(size)
-        runEverySolution(size)
+
+        // averages 1200-1400 guesses/game
+//        runEverySolution(size, { size -> CodeBreakerRandomGuess(size) })
+
+        // averages 620-660 guesses/game
+        runEverySolution(size, { size -> CodeBreakerGuessTracking(size) })
     }
 
-    private fun runEverySolution(size: Int) {
+    private fun runEverySolution(size: Int, codeBreakerFactory: (Int) -> CodeBreaker) {
         val codeMaker = CodeMaker(size)
         val solutions = codeMaker.createAllSolutions()
 
@@ -20,7 +27,7 @@ object MasterMind {
         var solutionCount = 0
         solutions.forEach { solution ->
             println("Solution #${solutionCount + 1}")
-            val codeBreaker = CodeBreaker(size)
+            val codeBreaker = codeBreakerFactory(size)
 
             var guessCount = 0
             do {
@@ -46,7 +53,7 @@ object MasterMind {
         val codeMaker = CodeMaker(size)
         val solution = codeMaker.createSolution()
 
-        val codeBreaker = CodeBreaker(size)
+        val codeBreaker = CodeBreakerRandomGuess(size)
 
         var guesses = 0
         do {
