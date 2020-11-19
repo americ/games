@@ -15,16 +15,16 @@ class CodeMakerSpec : Spek({
 
                 it("assesses a total match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED)),
-                        MMSet(listOf(MMPeg.RED))
+                        MMSet(mutableListOf(MMPeg.RED)),
+                        MMSet(mutableListOf(MMPeg.RED))
                     )
                     assertEquals(codeMaker.size, assessment.blackCount)
                     assertEquals(0, assessment.whiteCount)
                 }
                 it("assesses a total mismatch correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED)),
-                        MMSet(listOf(MMPeg.GREEN))
+                        MMSet(mutableListOf(MMPeg.RED)),
+                        MMSet(mutableListOf(MMPeg.GREEN))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(0, assessment.whiteCount)
@@ -34,40 +34,40 @@ class CodeMakerSpec : Spek({
                 val codeMaker = CodeMaker(2)
                 it("assesses a total match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE)),
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE)),
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE))
                     )
                     assertEquals(codeMaker.size, assessment.blackCount)
                     assertEquals(0, assessment.whiteCount)
                 }
                 it("assesses a total mismatch correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE)),
-                        MMSet(listOf(MMPeg.GREEN, MMPeg.YELLOW))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE)),
+                        MMSet(mutableListOf(MMPeg.GREEN, MMPeg.YELLOW))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(0, assessment.whiteCount)
                 }
                 it("assesses a single color match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE)),
-                        MMSet(listOf(MMPeg.GREEN, MMPeg.RED))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE)),
+                        MMSet(mutableListOf(MMPeg.GREEN, MMPeg.RED))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(1, assessment.whiteCount)
                 }
                 it("assesses a dual color match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE)),
-                        MMSet(listOf(MMPeg.BLUE, MMPeg.RED))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE)),
+                        MMSet(mutableListOf(MMPeg.BLUE, MMPeg.RED))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(2, assessment.whiteCount)
                 }
                 it("assesses a single match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE)),
-                        MMSet(listOf(MMPeg.RED, MMPeg.GREEN))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE)),
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.GREEN))
                     )
                     assertEquals(1, assessment.blackCount)
                     assertEquals(0, assessment.whiteCount)
@@ -78,72 +78,72 @@ class CodeMakerSpec : Spek({
 
                 it("assesses a total match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN))
                     )
                     assertEquals(codeMaker.size, assessment.blackCount)
                     assertEquals(0, assessment.whiteCount)
                 }
                 it("assesses a total mismatch correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.BLACK, MMPeg.WHITE, MMPeg.YELLOW))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.BLACK, MMPeg.WHITE, MMPeg.YELLOW))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(0, assessment.whiteCount)
                 }
                 it("assesses a single color match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.BLUE, MMPeg.WHITE, MMPeg.YELLOW))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.BLUE, MMPeg.WHITE, MMPeg.YELLOW))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(1, assessment.whiteCount)
                 }
                 it("assesses a dual color match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.BLUE, MMPeg.WHITE, MMPeg.RED))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.BLUE, MMPeg.WHITE, MMPeg.RED))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(2, assessment.whiteCount)
                 }
                 it("assesses a triple color match correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.BLUE, MMPeg.GREEN, MMPeg.RED))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.BLUE, MMPeg.GREEN, MMPeg.RED))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(3, assessment.whiteCount)
                 }
                 it("assesses a full mix correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.RED, MMPeg.GREEN, MMPeg.BLACK))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.GREEN, MMPeg.BLACK))
                     )
                     assertEquals(1, assessment.blackCount)
                     assertEquals(1, assessment.whiteCount)
                 }
                 it("assesses dup solution pegs correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.RED, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLACK, MMPeg.RED))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.RED, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLACK, MMPeg.RED))
                     )
                     assertEquals(1, assessment.blackCount)
                     assertEquals(1, assessment.whiteCount)
                 }
                 it("assesses dup solution pegs correctly 2") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.RED, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.YELLOW, MMPeg.BLACK, MMPeg.RED))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.RED, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.YELLOW, MMPeg.BLACK, MMPeg.RED))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(1, assessment.whiteCount)
                 }
                 it("assesses dup guess pegs correctly") {
                     val assessment = codeMaker.assess(
-                        MMSet(listOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
-                        MMSet(listOf(MMPeg.YELLOW, MMPeg.RED, MMPeg.RED))
+                        MMSet(mutableListOf(MMPeg.RED, MMPeg.BLUE, MMPeg.GREEN)),
+                        MMSet(mutableListOf(MMPeg.YELLOW, MMPeg.RED, MMPeg.RED))
                     )
                     assertEquals(0, assessment.blackCount)
                     assertEquals(1, assessment.whiteCount)

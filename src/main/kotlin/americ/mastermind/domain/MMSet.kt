@@ -28,7 +28,11 @@ data class MMSet(val pegs: MutableList<MMPeg>) {
         }
     }
 
-    fun getByIndices(unmatchedIndices: List<Int>): List<MMPeg> {
-        return unmatchedIndices.map { pegs[it] }
+    fun getByIndices(indices: List<Int>): List<MMPeg> {
+        return indices.map { pegs[it] }
+    }
+
+    fun deepCopy(): MMSet {
+        return copy(pegs = pegs.toMutableList())
     }
 }

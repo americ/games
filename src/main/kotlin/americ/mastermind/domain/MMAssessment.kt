@@ -2,14 +2,16 @@ package americ.mastermind.domain
 
 data class MMAssessment(
     val blackCount: Int,
-    val whiteCount: Int
+    val whiteCount: Int,
+    val size: Int
 ) {
+
     companion object {
         fun from(solution: MMSet, guess: MMSet, size: Int): MMAssessment {
             verifySize(solution, size)
             verifySize(guess, size)
             if (solution == guess) {
-                return MMAssessment(size, 0)
+                return MMAssessment(size, 0, size)
             } else {
                 var blackCount = 0
                 val unmatchedIndices = mutableListOf<Int>()
@@ -32,7 +34,7 @@ data class MMAssessment(
                     }
                 }
 
-                return MMAssessment(blackCount, whiteCount)
+                return MMAssessment(blackCount, whiteCount, size)
             }
         }
 
@@ -41,5 +43,13 @@ data class MMAssessment(
                 throw Exception("MMSet size (${set.pegs.size}) does not match game size ($size)")
             }
         }
+    }
+
+    fun getEmptyCount(): Int = size - (blackCount + whiteCount)
+
+    fun getMarkers(): List<MMMarker> {
+        return (1..blackCount).map { MMMarker.BLACK } +
+                (1..whiteCount).map { MMMarker.WHITE } +
+                (1..getEmptyCount()).map { MMMarker.EMPTY }
     }
 }

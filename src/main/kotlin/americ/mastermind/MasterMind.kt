@@ -27,12 +27,21 @@ object MasterMind {
 //        runEverySolution(size, { size -> CodeBreakerBlankRule(size) })
 
         // averages exactly 5 guesses/game, max=9 in 1 seconds
-        runEverySolution(size, { size -> CodeBreakerFullAssessment(size) })
+//        runEverySolution(size, { size -> CodeBreakerFullAssessment(size) })
+
+        // WITH possibleSolutions AS A LIST:
+        // - averages 7 guesses/game, max=12 in 165 seconds
+        // AFTER possibleSolutions toSet():
+        // - averages 7 guesses/game, max=12 in 13 seconds
+        // AFTER also eliminating duplicate assignments with a set
+        // - averages 7 guesses/game, max=12 in 3 seconds
+        runEverySolution(size, { size -> CodeBreakerAssessmentAssignment(size) })
+
 
         /*
         Future breakers:
-        2) 4 marker rule - when assessment produces 4 total markers, then treat them as if they
-                were all white. Remove solutions from the solution space that are not permutations
+        2) 4 marker rule - when assessment produces 1-4 white markers and no black markers,
+                remove solutions from the solution space that are not permutations
                 of the guess pegs.
         3) similarity
             3a) based on assessment, calculate a 0-10 similarity rating to indicate how
@@ -46,6 +55,14 @@ object MasterMind {
                 markers to pegs. For each assignment generate all possible solutions. Remove
                 from the solution space any solution that's not in the generated possible
                 solutions.
+          5) like #4, marker-peg assignments (CodeBreakerAssessmentAssignment), but treat
+                the assignment holistically. Any peg assigned to EMPTY should limit the
+                values of all other pegs to avoid that peg color. Likewise, any peg assigned
+                to white should require that the peg color appear in some other solution
+                peg.
+
+        Other Changes:
+        - remove unused fields on all breakers
          */
     }
 
