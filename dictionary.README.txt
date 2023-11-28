@@ -1,0 +1,3 @@
+The dictionary was downloaded from here: https://github.com/redbo/scrabble/tree/master
+It's supposed to be the words in the Scrabble dictionary.
+Boggle doesn't allow words shorter than 3 letters, so the dictionary needs to be filtered.
